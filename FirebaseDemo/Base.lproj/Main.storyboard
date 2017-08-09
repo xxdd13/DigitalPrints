@@ -92,7 +92,7 @@
         <!--Order History-->
         <scene sceneID="BV6-iP-uzc">
             <objects>
-                <viewController id="C3V-yJ-gkj" sceneMemberID="viewController">
+                <viewController id="C3V-yJ-gkj" customClass="OrderHistoryController" customModule="FirebaseDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IWE-p5-ilX"/>
                         <viewControllerLayoutGuide type="bottom" id="Ara-hW-OJc"/>
@@ -189,7 +189,6 @@
         <!--  Invite-->
         <scene sceneID="UYA-jy-qKQ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Cy-ZC-OSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="7it-fq-h2g" customClass="InviteViewController" customModule="FirebaseDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AnD-qk-oPA"/>
@@ -222,6 +221,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="  Invite" image="invite" id="Ec7-Cb-qXv"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Cy-ZC-OSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6269.6000000000004" y="1680.8095952023989"/>
         </scene>

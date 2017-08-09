@@ -5,6 +5,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)com.xxdd13.fbfb</string>
+		<string>$(AppIdentifierPrefix)com.xxdd13.fbfb</string>
 	</array>
 </dict>
 </plist>

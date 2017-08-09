@@ -3,7 +3,7 @@ import FBSDKLoginKit
 import Firebase
 import Foundation
 import imgurupload_client
-
+import Alamofire
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //let imagePickerController = UIImagePickerController()
@@ -28,8 +28,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool)
     {
         viewController.navigationItem.title = "Media" // Change title
-        imagePicker.navigationBar.tintColor = .white //Text Color
-        imagePicker.navigationBar.isTranslucent = true
+        
+        
         
     }
     
@@ -48,8 +48,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         let uppery = centerY-offy
         let lowery = centerY+offy
         let labelOff = 80
-        print(centerX)
-        print(centerY)
+        
         
         album?.center.x = CGFloat(leftx) //album
         
@@ -77,13 +76,19 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         facebookLabel?.center.y=CGFloat(lowery+labelOff)
         
         /**/
+        
+        if let currentUser = FIRAuth.auth()?.currentUser {
+            let fbusername = currentUser.displayName
+            let fbemail = currentUser.email
+            Alamofire.request("https://fbfb-9d93e.appspot.com/addu?userID="+fbemail!)
+        }
     
     }
 
     
     @IBAction func selectImageFromPhotoLibrary(_ sender: Any) {
         
-        
+        imagePicker.navigationBar.isTranslucent = false
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
@@ -92,10 +97,20 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imagePicker.navigationBar.isTranslucent = false
+            var capturedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            let rect = CGRect(x:0, y:0, width:capturedImage.size.width/3, height:capturedImage.size.height/3)
+            UIGraphicsBeginImageContext(rect.size)
+            capturedImage.draw(in: rect)
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             
-            let uploadFilename = "nature.jpg"
-            let sourcePath = Bundle.main.path(forResource: "nature", ofType: "jpg")
-            self.selectedImage.image = UIImage(contentsOfFile: sourcePath!)
+            let compressedImageData = UIImageJPEGRepresentation(resizedImage!, 0.1)
+            capturedImage = UIImage(data: compressedImageData!)!
+            
+            self.selectedImage.image = capturedImage
+            
+            
             uploadImage()
             
             
@@ -138,6 +153,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         
         imagePicker.delegate = self
         
+        
         let notificationName = Notification.Name("NotificationIdentifier")
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handleAlert), name: notificationName, object: nil)
 
@@ -171,9 +187,25 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
             
             let notificationName = Notification.Name("NotificationIdentifier")
             NotificationCenter.default.post(name: notificationName, object: nil)
-            
+            var imgurlid=test.components(separatedBy: ".com/")[1]
+
             //dismiss(false, completion: nil)
-        
+            let cur_user = FIRAuth.auth()?.currentUser?.email
+            var requesturl = "https://fbfb-9d93e.appspot.com/addo?userID="+cur_user!+"&imageurl="+test
+            print(requesturl)
+            Alamofire.request(requesturl).responseJSON { response in
+                //print("Request: \(String(describing: response.request))")   // original url request
+                //print("Response: \(String(describing: response.response))") // http url response
+                //print("Result: \(response.result)")                         // response serialization result
+                
+                if let json = response.result.value {
+                    print("JSON: \(json)") // serialized json response
+                }
+                
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    print("Data: \(utf8Text)") // original server data as UTF8 string
+                }
+            }
             
         })
     }

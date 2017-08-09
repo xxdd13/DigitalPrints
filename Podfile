@@ -15,4 +15,6 @@ target 'FirebaseDemo' do
   pod 'FBSDKLoginKit'
 
   pod 'imgurupload-client'
+  pod 'Alamofire', '~> 4.4'
+  pod 'NVActivityIndicatorView'
 end

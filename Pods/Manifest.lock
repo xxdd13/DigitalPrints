@@ -46,14 +46,17 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - imgurupload-client (0.1.0):
     - Alamofire (~> 4.4)
+  - NVActivityIndicatorView (3.6.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.4)
   - Bolts
   - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Core
   - imgurupload-client
+  - NVActivityIndicatorView
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -70,7 +73,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   imgurupload-client: ad69e853ba4a547fc2676bf703f371875f82962b
+  NVActivityIndicatorView: c7c1c4300b418bd9ed06459e78d4df859ddbe31f
 
-PODFILE CHECKSUM: 71a86c58e218bd3a4c02908123372fe629b91113
+PODFILE CHECKSUM: 2b26d057dc66f60203afde569f055f98bcf4ef97
 
 COCOAPODS: 1.2.0
